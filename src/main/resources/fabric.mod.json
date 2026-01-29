@@ -1,0 +1,27 @@
+{
+	"schemaVersion": 1,
+	"id": "bedwars1058",
+	"version": "${version}",
+	"name": "BedWars1058 - Fabric",
+	"description": "BedWars1058 by andrei1058 ported to fabric.",
+	"authors": [
+		"AlexCreeper25, andrei1058"
+	],
+	"license": "GPL-3.0",
+	"icon": "assets/bedwars1058/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"com.alexcreeper.bedwars1058.BedWars"
+		]
+	},
+	"mixins": [
+		"bedwars1058.mixins.json"
+	],
+	"depends": {
+		"fabricloader": ">=0.18.4",
+		"minecraft": "~1.21.11",
+		"java": ">=21",
+		"fabric-api": "*"
+	}
+}

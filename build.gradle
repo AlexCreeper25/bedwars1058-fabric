@@ -1,0 +1,67 @@
+plugins {
+    id 'fabric-loom' version '1.14-SNAPSHOT'
+    id 'maven-publish'
+    id 'java'
+}
+
+// 1. Version e Group rimangono qui
+version = project.mod_version
+group = project.maven_group
+
+
+repositories {
+    mavenCentral()
+    maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+    maven { url "https://repo.spongepowered.org/repository/maven-public/" }
+    maven { url "https://oss.sonatype.org/content/repositories/releases/" }
+    maven { url "https://maven.nucleoid.xyz/" }
+}
+
+dependencies {
+    // Minecraft & Fabric
+    minecraft "com.mojang:minecraft:${project.minecraft_version}"
+    mappings "net.fabricmc:yarn:${project.yarn_mappings}"
+    modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
+    modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+
+    // Configurate (YAML)
+    implementation "org.spongepowered:configurate-yaml:4.1.2"
+    include "org.spongepowered:configurate-yaml:4.1.2"
+    implementation "org.spongepowered:configurate-core:4.1.2"
+    include "org.spongepowered:configurate-core:4.1.2"
+
+    // Permissions
+    modImplementation "me.lucko:fabric-permissions-api:0.6.1"
+    include "me.lucko:fabric-permissions-api:0.6.1"
+	
+	modImplementation "xyz.nucleoid:fantasy:0.7.0+1.21.11"
+}
+
+processResources {
+    inputs.property "version", project.version
+    filteringCharset "UTF-8"
+
+    filesMatching("fabric.mod.json") {
+        expand "version": project.version
+    }
+}
+
+// Configurazione Java spostata nel blocco corretto
+java {
+    sourceCompatibility = JavaVersion.VERSION_21
+    targetCompatibility = JavaVersion.VERSION_21
+    withSourcesJar()
+}
+
+tasks.withType(JavaCompile).configureEach {
+    it.options.release = 21
+    it.options.encoding = "UTF-8"
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+        }
+    }
+}
